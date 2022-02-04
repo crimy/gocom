@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gocomMapper">
+	<select id="login_check" resultType="String">
+		select name
+		from member
+		where userid=#{userid} and password=#{password}
+	</select>
+	
+	<select id="id_valid_check" resultType="int">
+		select COUNT(*)
+		from member
+		where userid=#{userid}
+	</select>
+	
+	<select id="name_valid_check" resultType="int">
+		select COUNT(*)
+		from member
+		where name=#{username}
+	</select>
+	
+	<insert id="register_member">
+		insert into member(
+			userid,
+			password,
+			name
+		) values (
+			#{userid},
+			#{password},
+			#{name}
+		)	
+	</insert>
+	
+</mapper>
