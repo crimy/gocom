@@ -1,5 +1,8 @@
 package com.gocom.service;
 
-public class ImageServiceImpl {
+import org.springframework.stereotype.Service;
 
+@Service
+public class ImageServiceImpl {
+	
 }

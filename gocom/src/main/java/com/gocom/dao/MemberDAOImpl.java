@@ -14,8 +14,9 @@ public class MemberDAOImpl implements MemberDAO {
 SqlSession sqlSession;
 
 	@Override
-	public String loginCheck(MemberDTO dto) {
-		return sqlSession.selectOne("gocomMapper.login_check", dto );
+	public boolean loginCheck(MemberDTO dto) {
+		String name = sqlSession.selectOne("gocomMapper.login_check", dto );
+		return ( name == null ) ? false : true;
 	}
 	@Override
 	public int idvalidCheck(String userid) {
@@ -29,6 +30,10 @@ SqlSession sqlSession;
 	public void registerMember(MemberDTO dto) {
 		sqlSession.selectOne("gocomMapper.register_member", dto );
 		
+	}
+	@Override
+	public MemberDTO viewMember(MemberDTO dto) {
+		return sqlSession.selectOne("gocomMapper.viewmember", dto );
 	}
 
 }

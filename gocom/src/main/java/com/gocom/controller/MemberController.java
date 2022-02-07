@@ -1,6 +1,7 @@
 package com.gocom.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -27,13 +28,13 @@ MemberService memberService;
 		return "member/login";
 	}
 	
-	@RequestMapping("login_check")
-	public ModelAndView login_chect(@ModelAttribute MemberDTO dto , HttpSession session) {
-		String name = memberService.loginCheck( dto, session );
+	@RequestMapping(value="login_check",method = RequestMethod.POST)
+	public ModelAndView login_check(@ModelAttribute MemberDTO dto, HttpSession session ) {
+		boolean result = memberService.loginCheck( dto, session );
 		ModelAndView mnv = new ModelAndView();
-		if( name != null ) {
-			mnv.addObject("name", name );
-			mnv.setViewName("home");			
+		if( result == true ) {
+			mnv.setViewName("home");
+			mnv.addObject("message", "success" );
 		}
 		else {
 			mnv.setViewName("member/login");

@@ -15,6 +15,14 @@
 		where userid=#{userid}
 	</select>
 	
+	<select id="viewmember" resultType="com.gocom.DTO.MemberDTO">
+		select 
+			userid,
+			name
+		from member
+		where userid=#{userid} AND password=#{password}
+	</select>
+	
 	<select id="name_valid_check" resultType="int">
 		select COUNT(*)
 		from member
@@ -31,6 +39,17 @@
 			#{password},
 			#{name}
 		)	
+	</insert>
+	
+	<insert id="write" useGeneratedKeys="true" keyProperty="con_no" parameterType="com.gocom.DTO.BoardDTO">
+		insert into board(
+			title,
+			userid
+		) values (
+			#{title},
+			#{userid}
+		)
+		
 	</insert>
 	
 </mapper>

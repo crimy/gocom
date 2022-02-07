@@ -1,5 +1,5 @@
 package com.gocom.service;
 
 public interface BoardService {
-	public void write();
+	public int write(String title,String userid);
 }

@@ -53,6 +53,12 @@ public class BoardDTO {
 /*
 
 CREATE TABLE board(
-	con_no
+	con_no INT NOT NULL,
+	title VARCHAR(500) NOT NULL,
+	userid VARCHAR(50) NOT NULL,
+	view_cnt INT NULL DEFAULT 0,
+	rec_cnt INT NULL DEFAULT 0,
+	warn_cnt INT NULL DEFAULT 0
+
 );
  */

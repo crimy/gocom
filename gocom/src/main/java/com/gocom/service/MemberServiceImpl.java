@@ -16,15 +16,20 @@ public class MemberServiceImpl implements MemberService {
 @Inject
 MemberDAO memberDao;
 	@Override
-	public String loginCheck(MemberDTO dto, HttpSession session) {
-		String name = memberDao.loginCheck( dto );
-		if( name != null ) {
-			session.setAttribute("userid", dto.getUserid() );
-			session.setAttribute("name", name );
+	public boolean loginCheck(MemberDTO dto, HttpSession session) {
+		boolean result = memberDao.loginCheck( dto );
+		if( result ) {
+			MemberDTO dto2 = viewMember(dto);
+			session.setAttribute("userid", dto2.getUserid() );
+			session.setAttribute("name", dto2.getName() );
 		}
-		return name;
+		return result;
 	}
-
+	
+	@Override
+	public MemberDTO viewMember( MemberDTO dto ) {
+		return memberDao.viewMember(dto);
+	}
 	@Override
 	public void logout(HttpSession session) {
 		session.invalidate();		
