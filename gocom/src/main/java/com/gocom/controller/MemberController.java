@@ -33,7 +33,7 @@ MemberService memberService;
 		boolean result = memberService.loginCheck( dto, session );
 		ModelAndView mnv = new ModelAndView();
 		if( result == true ) {
-			mnv.setViewName("home");
+			mnv.setViewName("index");
 			mnv.addObject("message", "success" );
 		}
 		else {

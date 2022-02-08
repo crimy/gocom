@@ -52,4 +52,44 @@
 		
 	</insert>
 	
+	<insert id="upload" parameterType="com.gocom.DTO.ImageDTO">
+	insert into image(
+		con_no,
+		fsn
+	) values (
+		#{con_no},
+		#{fsn}
+	)
+
+	</insert>
+	
+	<select id="list" resultType="com.gocom.DTO.BoardDTO">
+		select * from board
+	</select>
+	
+	<select id="boardView" resultType="com.gocom.DTO.BoardDTO">
+		select 
+			* 
+		from board
+		where 
+			con_no=#{con_no}
+	</select>
+	<update id="boardView2">
+		update
+			board
+		set
+			view_cnt = view_cnt + 1
+		where
+			con_no=#{con_no}
+	</update>
+	
+	<select id="imageView" resultType="com.gocom.DTO.ImageDTO">
+		select
+			*
+		from image
+		where
+			con_no=#{con_no}
+	</select>
+	
+	
 </mapper>

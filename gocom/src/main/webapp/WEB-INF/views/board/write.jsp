@@ -6,18 +6,10 @@
 	<title>Home</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-var cnt = 1;
-$(document).ready(function(){
-	
-	$('#buttonAdd').on('click',function(){
-		$('.add_file').append("<tr><td><input id='file_input' type='file' name="file" class='file" + cnt + "'/><a href='#this' onclick='deleteFile()'>삭제</a></td></tr>");
-		
-	});
-	$('#file_input').change(function(){
-		
-	});
+
+$(document).ready(function(){	
 	$('#buttonSbm').on("click", function() {
-		  if( $('#title') == "" ) {
+		  if( $('#title').val() == "" ) {
 			  alert('제목을 입력하세요');
 			  $('#title').focus();
 			  return;
@@ -25,6 +17,7 @@ $(document).ready(function(){
 		  $('.form1').submit();
 	});
 });
+
 </script>
 </head>
 <body>
@@ -34,30 +27,39 @@ $(document).ready(function(){
 	<table>
 		<tr>
 			<td>제목</td>
-			<td><input type="text" name="title" class="title" id="title"/>
-		</tr>
-				
-		<tr>
-			<td><button id="buttonAdd" type="button">파일추가</button></td>			
+			<td><input type="text" name="title" id="title"/>
 		</tr>
 		<tr>
 			<td>
 				<div class="file_list">
-					<input id="file_input" type="file" name="file" class="file0"/><a href="#this" onclick="deleteFile()">삭제</a>
-					<div class="img_preview" class="prv0"><img src=""></div>
+					<input id="file_input" type="file" name="file" class="file0" onchange="imgPreview(event);" multiple />
+					<div id="img_preview"></div>
 				</div>
-			</td>
-			<td>
-				<div class="add_file"></div>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<td><input type="button" id="buttonSbm" value='작성하기'/></td>
+				<input type="button" id="buttonSbm" value='작성하기'/>
 			</td>
 		</tr>
 	</table>
 </form>
+
+<script> 
+function imgPreview(event) {
+	$('#img_preview img').attr("src",null);
+	for (var image of event.target.files) {
+		var reader = new FileReader(); 
+		reader.onload = function(event) { 
+			var img = document.createElement("img");
+			img.setAttribute("src", event.target.result); 
+			document.querySelector("div#img_preview").appendChild(img); 
+		}; 
+		console.log(image); 
+		reader.readAsDataURL(image); 
+		} 
+} 
+</script>
 </body>
 </html>
 <!-- 
