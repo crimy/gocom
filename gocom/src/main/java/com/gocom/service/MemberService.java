@@ -11,4 +11,5 @@ public interface MemberService {
 	public int namevalidCheck( String username );
 	public void registerMember( MemberDTO dto );
 	public MemberDTO viewMember( MemberDTO dto );
+
 }

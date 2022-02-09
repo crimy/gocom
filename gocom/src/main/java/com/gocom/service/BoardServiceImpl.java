@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import com.gocom.DTO.BoardDTO;
+import com.gocom.DTO.RecListDTO;
+import com.gocom.DTO.WarnListDTO;
 import com.gocom.dao.BoardDAO;
 import com.gocom.dao.MemberDAO;
 
@@ -17,8 +19,8 @@ public class BoardServiceImpl implements BoardService{
 	BoardDAO boardDao;
 	
 	@Override
-	public int write( String title, String userid ) {
-		int con_no = boardDao.write(title,userid);
+	public int write( String title, String name ) {
+		int con_no = boardDao.write(title,name);
 		return con_no;
 		
 	}
@@ -30,9 +32,21 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardDTO boardView(String con_no) {
+	public BoardDTO boardView(int con_no) {
 		BoardDTO dto = boardDao.boardView(con_no); 
 		return dto;
+	}
+
+	@Override
+	public int recommend(int con_no, String userid) {
+		RecListDTO dto = new RecListDTO( userid, con_no );
+		return boardDao.recommend(dto);
+	}
+
+	@Override
+	public int warn(int con_no, String userid) {
+		WarnListDTO dto = new WarnListDTO( userid, con_no);
+		return boardDao.warn(dto);
 	}
 
 }

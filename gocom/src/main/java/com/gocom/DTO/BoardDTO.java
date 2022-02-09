@@ -1,23 +1,32 @@
 package com.gocom.DTO;
 
+import java.util.Date;
+
 public class BoardDTO {
 	private int con_no; // 글번호
 	private String title;
-	private String userid; // 작성자
+	private String name; // 작성자
 	private int view_cnt; // 조회수
 	private int rec_cnt; //추천수
 	private int warn_cnt; // 반대수
+	private Date reg_date;
 	
 	public int getCon_no() {
 		return con_no;
 	}
 	@Override
 	public String toString() {
-		return "BoardDTO [con_no=" + con_no + ", title=" + title + ", userid=" + userid + ", view_cnt=" + view_cnt
+		return "BoardDTO [con_no=" + con_no + ", title=" + title + ", userid=" + name + ", view_cnt=" + view_cnt
 				+ ", rec_cnt=" + rec_cnt + ", warn_cnt=" + warn_cnt + "]";
 	}
 	public void setCon_no(int con_no) {
 		this.con_no = con_no;
+	}
+	public Date getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
 	}
 	public String getTitle() {
 		return title;
@@ -25,11 +34,12 @@ public class BoardDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getUserid() {
-		return userid;
+
+	public String getName() {
+		return name;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getView_cnt() {
 		return view_cnt;

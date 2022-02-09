@@ -44,10 +44,10 @@
 	<insert id="write" useGeneratedKeys="true" keyProperty="con_no" parameterType="com.gocom.DTO.BoardDTO">
 		insert into board(
 			title,
-			userid
+			name
 		) values (
 			#{title},
-			#{userid}
+			#{name}
 		)
 		
 	</insert>
@@ -64,7 +64,13 @@
 	</insert>
 	
 	<select id="list" resultType="com.gocom.DTO.BoardDTO">
-		select * from board
+		select 
+			* 
+		from board
+		order by
+			con_no
+		desc;
+		
 	</select>
 	
 	<select id="boardView" resultType="com.gocom.DTO.BoardDTO">
@@ -74,6 +80,7 @@
 		where 
 			con_no=#{con_no}
 	</select>
+	
 	<update id="boardView2">
 		update
 			board
@@ -91,5 +98,42 @@
 			con_no=#{con_no}
 	</select>
 	
+	<insert id="recBoard">
+		insert into	reclist (
+			userid,
+			con_no
+		) values (
+			#{userid},
+			#{con_no}
+		)
+	</insert>
+	
+	<update id="recommend">
+		update 
+			board
+		set
+			rec_cnt = rec_cnt + 1
+		where
+			con_no=#{con_no}
+	</update>
+	
+	<insert id="warnBoard">
+		insert into	warnlist (
+			userid,
+			con_no
+		) values (
+			#{userid},
+			#{con_no}
+		)
+	</insert>
+	
+	<update id="warn">
+		update 
+			board
+		set
+			warn_cnt = warn_cnt + 1
+		where
+			con_no=#{con_no}
+	</update>
 	
 </mapper>

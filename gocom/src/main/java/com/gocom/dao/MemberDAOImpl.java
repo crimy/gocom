@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.gocom.DTO.MemberDTO;
+import com.gocom.DTO.RecListDTO;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
@@ -35,5 +36,6 @@ SqlSession sqlSession;
 	public MemberDTO viewMember(MemberDTO dto) {
 		return sqlSession.selectOne("gocomMapper.viewmember", dto );
 	}
+
 
 }

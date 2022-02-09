@@ -22,14 +22,30 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="<c:url value="/resources/lib/owlcarousel/assets/owl.carousel.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"/>" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+$(document).ready(function(){	
+	$('#buttonSbm').on("click", function() {
+		  if( $('#InputTitle').val() == "" ) {
+			  alert('제목을 입력하세요');
+			  $('#InputTitle').focus();
+			  return;
+		  }
+		  $('.boardForm').submit();
+	});
+});
+
+</script>
+
 </head>
 <body>
 <%
@@ -110,13 +126,13 @@
         
         <!-- Content Start -->
         <div class="content">        
-        
+    	
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
                 <a href="/gocom/" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
+                <a href="/gocom/" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
 				<div class="col-8">
@@ -150,7 +166,34 @@
                 </c:choose>
             </nav>
             
-<!-- Navbar End -->            
+<!-- Navbar End --> 
+
+            <!-- Form Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">글쓰기</h6>
+                            <form class="boardForm" action="upload" method="POST" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="InputTitle" class="form-label">제목</label>
+                                    <input type="text" class="form-control" name="title" id="InputTitle"/>
+                                </div>
+	                            <div class="mb-3">
+	                                <label for="formFileMultiple" class="form-label">이미지 업로드</label>
+	                                <input class="form-control" type="file" name="file" id="formFileMultiple" onchange="imgPreview(event);" multiple>
+	                            </div>
+	                            <div id="img_preview"></div>                                
+                                <button type="button" id="buttonSbm" class="btn btn-primary">작성하기</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- Form End -->  
+            
+                       
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">
@@ -179,16 +222,30 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
+    <script src="<c:url value="/resources/lib/chart/chart.min.js"/>"></script>
+    <script src="<c:url value="/resources/lib/easing/easing.min.js"/>"></script>
+    <script src="<c:url value="/resources/lib/waypoints/waypoints.min.js"/>"></script>
+    <script src="<c:url value="/resources/lib/owlcarousel/owl.carousel.min.js"/>"></script>
+    <script src="<c:url value="/resources/lib/tempusdominus/js/moment.min.js"/>"></script>
+    <script src="<c:url value="/resources/lib/tempusdominus/js/moment-timezone.min.js"/>"></script>
+    <script src="<c:url value="/resources/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"/>"></script>
+<script> 
+function imgPreview(event) {
+	$('#img_preview img').attr("src",null);
+	for (var image of event.target.files) {
+		var reader = new FileReader(); 
+		reader.onload = function(event) { 
+			var img = document.createElement("img");
+			img.setAttribute("src", event.target.result); 
+			document.querySelector("div#img_preview").appendChild(img); 
+		}; 
+		console.log(image); 
+		reader.readAsDataURL(image); 
+		} 
+} 
+</script>
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="<c:url value="/resources/js/main.js"/>"></script>
 </body>
 
 </html>

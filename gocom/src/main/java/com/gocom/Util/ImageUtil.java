@@ -11,7 +11,7 @@ public class ImageUtil {
 		String t = System.getProperty("os.name");
 		String upload = "/pukyung05/upload/";
 		if( t.indexOf("indows") != -1 ) {
-			upload = "C:/Users/tmddn/git/gocom/gocom/src/main/webapp/resources/upload";
+			upload = "C:/Users/tmddn/git/gocom/gocom/src/main/webapp/resources/images";
 		}
 		return upload;
 	}

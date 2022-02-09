@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import com.gocom.DTO.MemberDTO;
+import com.gocom.DTO.RecListDTO;
 import com.gocom.dao.MemberDAO;
 
 
@@ -59,6 +60,7 @@ MemberDAO memberDao;
 		memberDao.registerMember( dto );
 		
 	}
+
 }
 
 

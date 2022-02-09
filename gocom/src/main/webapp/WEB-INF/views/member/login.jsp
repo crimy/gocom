@@ -54,7 +54,7 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="" class="navbar-brand mx-4 mb-3">
+                <a href="/gocom/" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>gocom</h3>
                 </a>
                   	<c:choose>
@@ -83,14 +83,25 @@
 		            </c:choose>
                 
                 <div class="navbar-nav w-100">                                      
-                    <a href="guestbook/list" class="nav-item nav-link"><i class="fas fa-feather-alt me-2"></i>방명록</a>
-                    <a href="board/list" class="nav-item nav-link"><i class="fas fa-photo-video me-2"></i>게시판</a>
-                    <div class="nav-item dropdown">
+                    <a href="/gocom/guestbook/list" class="nav-item nav-link"><i class="fas fa-feather-alt me-2"></i>방명록</a>
+                    <a href="/gocom/board/list" class="nav-item nav-link"><i class="fas fa-photo-video me-2"></i>게시판</a>
+                    <div class="nav-item dropdown sticky-right">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-id-card me-2"></i>회원</a>
+                    <c:choose>
+                    	<c:when test="${sessionScope.name == null }">
+	                        <div class="dropdown-menu bg-transparent border-0">
+	                            <a href="/gocom/member/login" class="dropdown-item">로그인</a>
+	                            <a href="/gocom/member/regi" class="dropdown-item">회원가입</a>
+	                        </div>
+	                    </c:when>
+                        <c:otherwise>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="member/login" class="dropdown-item">로그인</a>
-                            <a href="member/regi" class="dropdown-item">회원가입</a>
+                            <a href="/gocom/member/login" class="dropdown-item">로그인</a>
+                            <a href="/gocom/member/regi" class="dropdown-item">회원가입</a>
                         </div>
+                        </c:otherwise>
+                    </c:choose>
+                        
                     </div>
                 </div>
             </nav>
@@ -98,52 +109,18 @@
         <!-- Sidebar End -->
         
         <!-- Content Start -->
-        <div class="content">        
-        	       
-      	<!-- Sign In Start -->
-        <form name="form1" method="POST" action="login_check">
-        <div class="container-fluid">
-            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
-                <div class="col-12 col-sm-9 col-md-7 col-lg-5 col-xl-4">
-                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="index.html" class="">
-                                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>gocom</h3>
-                            </a>
-                            <h3>로그인</h3>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="floatingInput" name="userid" placeholder="아이디를 입력해주세요">
-                            <label for="floatingInput">아이디</label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="비밀번호를 입력해주세요">
-                            <label for="floatingPassword">비밀번호</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">로그인</button>
-                        <p class="text-center mb-0">회원이 아니신가요 ? <a href="regi">회원가입</a></p>
-                        <c:if test="${message == 'error'}">
-						<div>ID 또는 비밀번호가 틀렸습니다.
-						</div>
-						</c:if>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </form>
-        
-        <!-- Sign In End -->
+        <div class="content">  
+              
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="/gocom/" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
+                <a href="/gocom/" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
+				<div class="col-8">
+				</div>
                 <c:choose>
                 	<c:when test="${sessionScope.name != null}">
 	                    <div class="nav-item dropdown">
@@ -165,21 +142,56 @@
 	                            
 	                        </a>
 	                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-	                            <a href="member/login" class="dropdown-item">로그인</a>
-	                            <a href="member/signin" class="dropdown-item">회원가입</a>
+	                            <a href="/gocom/member/login" class="dropdown-item">로그인</a>
+	                            <a href="/gocom/member/regi" class="dropdown-item">회원가입</a>
 	                        </div>
 	                    </div>                
                     </c:otherwise>
                 </c:choose>
             </nav>
             
-<!-- Navbar End -->            
+<!-- Navbar End -->     
+        	       
+      	<!-- Sign In Start -->
+        <form name="form1" method="POST" action="login_check">
+        <div class="container-fluid">
+            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+                <div class="col-12 col-sm-9 col-md-8 col-lg-7 col-xl-6">
+                    <div class="bg-light rounded p-3 p-sm-5 my-4 mx-1">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <a href="index.html" class="">
+                                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>gocom</h3>
+                            </a>
+                            <h3>로그인</h3>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="floatingInput" name="userid" placeholder="아이디를 입력해주세요">
+                            <label for="floatingInput">아이디</label>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="비밀번호를 입력해주세요">
+                            <label for="floatingPassword">비밀번호</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">로그인</button>
+                        <p class="text-center mb-0">회원이 아니신가요 ? <a href="regi">회원가입</a></p>
+                        <c:if test="${message == 'error'}">
+						<div class="text-center text-danger">ID 또는 비밀번호가 틀렸습니다.
+						</div>
+						</c:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        
+        <!-- Sign In End -->
+          
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
+                            &copy; <a href="#">gocom</a>, All Right Reserved. 
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->

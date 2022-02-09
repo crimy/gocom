@@ -23,7 +23,7 @@ ImageDAO imageDao;
 	}
 
 	@Override
-	public List<ImageDTO> imageView(String con_no) {
+	public List<ImageDTO> imageView(int con_no) {
 		return imageDao.imageView(con_no);
 	}
 	

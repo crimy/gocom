@@ -1,7 +1,10 @@
 package com.gocom.controller;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gocom.DTO.MemberDTO;
+import com.gocom.Util.AlertUtil;
 import com.gocom.service.MemberService;
 
 @Controller
@@ -33,7 +37,7 @@ MemberService memberService;
 		boolean result = memberService.loginCheck( dto, session );
 		ModelAndView mnv = new ModelAndView();
 		if( result == true ) {
-			mnv.setViewName("index");
+			mnv.setViewName("redirect:/");
 			mnv.addObject("message", "success" );
 		}
 		else {
@@ -50,7 +54,7 @@ MemberService memberService;
 		return mnv;
 	}		
 	
-	@RequestMapping("signin")
+	@RequestMapping("regi")
 	public String register() {
 		return "member/regi";
 	}
@@ -72,8 +76,10 @@ MemberService memberService;
 	}
 	
 	@RequestMapping(value="regi_form", method=RequestMethod.POST)
-	public String regi_form(MemberDTO dto) {
+	public String regi_form(MemberDTO dto,HttpServletResponse response) throws IOException {
+		
 		memberService.registerMember(dto);
+		AlertUtil.alert(response, "가입됐습니다!");
 		return "redirect:/member/login";
 	}
 }
