@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="true" %>
+
 <html>
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>gocom 게시판입니다</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -85,20 +87,18 @@
                 <div class="navbar-nav w-100">                                      
                     <a href="/gocom/guestbook/list" class="nav-item nav-link"><i class="fas fa-feather-alt me-2"></i>방명록</a>
                     <a href="/gocom/board/list" class="nav-item nav-link"><i class="fas fa-photo-video me-2"></i>게시판</a>
+                   <c:choose>
+                    	<c:when test="${sessionScope.name == null }">
                     <div class="nav-item dropdown sticky-right">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-id-card me-2"></i>회원</a>
-                    <c:choose>
-                    	<c:when test="${sessionScope.name == null }">
+                    
 	                        <div class="dropdown-menu bg-transparent border-0">
 	                            <a href="/gocom/member/login" class="dropdown-item">로그인</a>
 	                            <a href="/gocom/member/regi" class="dropdown-item">회원가입</a>
 	                        </div>
 	                    </c:when>
                         <c:otherwise>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="/gocom/member/login" class="dropdown-item">로그인</a>
-                            <a href="/gocom/member/regi" class="dropdown-item">회원가입</a>
-                        </div>
+                        	
                         </c:otherwise>
                     </c:choose>
                         
@@ -155,15 +155,16 @@
 <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">                                      
-                    <div class="col-sm-12 col-xl-6">
+                    <div class="col-sm-12 col-xl-10">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">게시판</h6>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th class="col-1" scope="col">번호</th>
-                                        <th class="col-6" scope="col">제목</th>
+                                        <th class="col-4" scope="col">제목</th>
                                         <th class="col-4" scope="col">작성자</th>
+                                        <th class="col-2" scope="col">작성일</th>
                                         <th class="col-1" scope="col">조회수</th>
                                     </tr>
                                 </thead>
@@ -173,12 +174,33 @@
 										<th scope="row">${t.con_no}</th>
 										<td><a href="view?no=${t.con_no}">${t.title}</a></td>
 										<td>${t.name}</td>
+										<td><fmt:formatDate value="${t.reg_date }" pattern="yyyy.MM.dd"/> </td>
 										<td>${t.view_cnt}</td> 
 									</tr>
 									</c:forEach>									
 																
                                 </tbody>
                             </table>
+        <div style="display: block; text-align: center;">		
+		<c:if test="${paging.startPage != 1 }">
+			<a href="/gocom/board/list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
+		</c:if>
+		<div class="btn-group me-2" role="group" aria-label="First group">
+		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+			<c:choose>
+				<c:when test="${p == paging.nowPage }">
+					<button disabled type="button" class="btn btn-secondary">${p }</button>
+				</c:when>
+				<c:when test="${p != paging.nowPage }">
+					<button onclick="location.href='/gocom/board/list?nowPage=${p }&cntPerPage=${paging.cntPerPage}'" type="button" class="btn btn-primary">${p }</button>					
+				</c:when>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${paging.endPage != paging.lastPage}">
+			<a href="/gocom/board/list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a>
+		</c:if>
+		</div>
+	</div>
                             <c:choose>
 								<c:when test="${sessionScope.name != null}">
 									<div class="float-end">

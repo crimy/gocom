@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import com.gocom.DTO.BoardDTO;
+import com.gocom.DTO.PagingDTO;
 import com.gocom.DTO.RecListDTO;
 import com.gocom.DTO.WarnListDTO;
 import com.gocom.dao.BoardDAO;
@@ -26,9 +27,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardDTO> list() {
-		List<BoardDTO> list = boardDao.list();
-		return list;
+	public List<BoardDTO> list( PagingDTO dto ) {
+		
+		return boardDao.list(dto);
 	}
 
 	@Override
@@ -47,6 +48,16 @@ public class BoardServiceImpl implements BoardService{
 	public int warn(int con_no, String userid) {
 		WarnListDTO dto = new WarnListDTO( userid, con_no);
 		return boardDao.warn(dto);
+	}
+
+	@Override
+	public int countboard() {		
+		return boardDao.countBoard();
+	}
+
+	@Override
+	public List<BoardDTO> hotlist() {
+		return boardDao.hotlist();
 	}
 
 }

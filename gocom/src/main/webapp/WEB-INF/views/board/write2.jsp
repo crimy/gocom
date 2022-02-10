@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>gocom- 글을 작성해주세요</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -101,20 +101,18 @@ $(document).ready(function(){
                 <div class="navbar-nav w-100">                                      
                     <a href="/gocom/guestbook/list" class="nav-item nav-link"><i class="fas fa-feather-alt me-2"></i>방명록</a>
                     <a href="/gocom/board/list" class="nav-item nav-link"><i class="fas fa-photo-video me-2"></i>게시판</a>
+                   <c:choose>
+                    	<c:when test="${sessionScope.name == null }">
                     <div class="nav-item dropdown sticky-right">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-id-card me-2"></i>회원</a>
-                    <c:choose>
-                    	<c:when test="${sessionScope.name == null }">
+                    
 	                        <div class="dropdown-menu bg-transparent border-0">
 	                            <a href="/gocom/member/login" class="dropdown-item">로그인</a>
 	                            <a href="/gocom/member/regi" class="dropdown-item">회원가입</a>
 	                        </div>
 	                    </c:when>
                         <c:otherwise>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="/gocom/member/login" class="dropdown-item">로그인</a>
-                            <a href="/gocom/member/regi" class="dropdown-item">회원가입</a>
-                        </div>
+                        	
                         </c:otherwise>
                     </c:choose>
                         

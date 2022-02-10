@@ -79,7 +79,7 @@ MemberService memberService;
 	public String regi_form(MemberDTO dto,HttpServletResponse response) throws IOException {
 		
 		memberService.registerMember(dto);
-		AlertUtil.alert(response, "가입됐습니다!");
+		AlertUtil.alertAndMovePage(response, "가입됐습니다!", "/gocom");
 		return "redirect:/member/login";
 	}
 }

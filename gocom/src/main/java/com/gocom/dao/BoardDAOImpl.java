@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gocom.DTO.BoardDTO;
 import com.gocom.DTO.MemberDTO;
+import com.gocom.DTO.PagingDTO;
 import com.gocom.DTO.RecListDTO;
 import com.gocom.DTO.WarnListDTO;
 
@@ -28,12 +29,6 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.insert("gocomMapper.write", dto );
 		int con_no = dto.getCon_no();
 		return con_no;
-	}
-
-	@Override
-	public List<BoardDTO> list() {
-		List<BoardDTO> list = sqlSession.selectList("gocomMapper.list");
-		return list;
 	}
 
 	@Override
@@ -54,6 +49,20 @@ public class BoardDAOImpl implements BoardDAO {
 	public int warn(WarnListDTO dto) {
 		sqlSession.update("gocomMapper.warn",dto.getCon_no());	
 		return sqlSession.insert("gocomMapper.warnBoard", dto );
+	}
+	@Override
+	public int countBoard() {
+		return sqlSession.selectOne("gocomMapper.countBoard");
+	}
+
+	@Override
+	public List<BoardDTO> list(PagingDTO dto) {
+		return sqlSession.selectList("gocomMapper.selectBoard",dto);
+	}
+
+	@Override
+	public List<BoardDTO> hotlist() {
+		return sqlSession.selectList("gocomMapper.hotlist");
 	}
 
 }

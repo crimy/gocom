@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageUtil {
 	public static String path() {
 		String t = System.getProperty("os.name");
-		String upload = "/pukyung05/upload/";
+		String upload = "/pukyung05/tomcat/webapps/gocom/resources/upload/";
 		if( t.indexOf("indows") != -1 ) {
 			upload = "C:/Users/tmddn/git/gocom/gocom/src/main/webapp/resources/images";
 		}
