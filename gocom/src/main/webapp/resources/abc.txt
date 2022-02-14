@@ -1,0 +1,66 @@
+Table "member" {
+  "userid" VARCHAR(50) [pk, not null]
+  "password" VARCHAR(50) [not null]
+  "name" VARCHAR(50) [not null]
+  "regi_date" DATETIME [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "board" {
+  "con_no" INT(11) [pk, not null, increment]
+  "title" VARCHAR(500) [not null]
+  "name" VARCHAR(50) [not null]
+  "view_cnt" INT(11) [default: 0]
+  "rec_cnt" INT(11) [default: 0]
+  "warn_cnt" INT(11) [default: 0]
+  "reg_date" DATETIME [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "emoji" {
+  "con_no" INT(11) [default: NULL]
+  "emo_name" VARCHAR(50) [default: NULL]
+  "name" VARCHAR(50) [default: NULL]
+  "x_pos" INT(11) [default: NULL]
+  "y_pos" INT(11) [default: NULL]
+}
+
+Table "image" {
+  "img_no" INT(11) [pk, not null, increment]
+  "con_no" INT(11) [not null]
+  "fsn" VARCHAR(500) [not null]
+}
+
+Table "warnlist" {
+  "userid" VARCHAR(50) [not null]
+  "con_no" INT(11) [not null]
+}
+
+Table "reclist" {
+  "userid" VARCHAR(50) [not null]
+  "con_no" INT(11) [not null]
+}
+
+Table "guestbook" {
+  "gb_no" INT(11) [pk, not null, increment]
+  "name" VARCHAR(50) [not null]
+  "ment" VARCHAR(50) [not null, default: 0]
+  "reg_date" DATETIME [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+
+Ref: "member"."name" < "board"."name"
+
+Ref: "member"."userid" < "warnlist"."userid"
+
+Ref: "member"."userid" < "reclist"."userid"
+
+Ref: "warnlist"."con_no" < "board"."con_no"
+
+Ref: "board"."con_no" < "reclist"."con_no"
+
+Ref: "image"."con_no" < "board"."con_no"
+
+Ref: "emoji"."con_no" < "board"."con_no"
+
+Ref: "emoji"."name" < "member"."name"
+
+Ref: "member"."name" < "guestbook"."name"
