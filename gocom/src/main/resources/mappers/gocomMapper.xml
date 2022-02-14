@@ -15,6 +15,14 @@
 		where userid=#{userid}
 	</select>
 	
+	<select id="viewmember" resultType="com.gocom.DTO.MemberDTO">
+		select 
+			userid,
+			name
+		from member
+		where userid=#{userid} AND password=#{password}
+	</select>
+	
 	<select id="name_valid_check" resultType="int">
 		select COUNT(*)
 		from member
@@ -33,4 +41,203 @@
 		)	
 	</insert>
 	
+	<insert id="write" useGeneratedKeys="true" keyProperty="con_no" parameterType="com.gocom.DTO.BoardDTO">
+		insert into board(
+			title,
+			name
+		) values (
+			#{title},
+			#{name}
+		)
+		
+	</insert>
+	
+	<insert id="upload" parameterType="com.gocom.DTO.ImageDTO">
+	insert into image(
+		con_no,
+		fsn
+	) values (
+		#{con_no},
+		#{fsn}
+	)
+
+	</insert>
+		
+	<select id="boardView" resultType="com.gocom.DTO.BoardDTO">
+		select 
+			* 
+		from board
+		where 
+			con_no=#{con_no}
+	</select>
+	
+	<update id="boardView2">
+		update
+			board
+		set
+			view_cnt = view_cnt + 1
+		where
+			con_no=#{con_no}
+	</update>
+	
+	<select id="imageView" resultType="com.gocom.DTO.ImageDTO">
+		select
+			*
+		from image
+		where
+			con_no=#{con_no}
+	</select>
+	
+	<insert id="recBoard">
+		insert into	reclist (
+			userid,
+			con_no
+		) values (
+			#{userid},
+			#{con_no}
+		)
+	</insert>
+	
+	<update id="recommend">
+		update 
+			board
+		set
+			rec_cnt = rec_cnt + 1
+		where
+			con_no=#{con_no}
+	</update>
+	
+	<insert id="warnBoard">
+		insert into	warnlist (
+			userid,
+			con_no
+		) values (
+			#{userid},
+			#{con_no}
+		)
+	</insert>
+	
+	<update id="warn">
+		update 
+			board
+		set
+			warn_cnt = warn_cnt + 1
+		where
+			con_no=#{con_no}
+	</update>
+	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countBoard" resultType="int">
+		SELECT COUNT(*) FROM board
+	</select>
+	
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectBoard" resultType="com.gocom.DTO.BoardDTO">
+SELECT B.* FROM (
+	SELECT @ROWNUM:=@ROWNUM+1 AS RN , A.* 
+							FROM (
+								SELECT 
+									@ROWNUM:=0 AS RN2,
+									con_no as con_no,
+									title as title,
+									name as name,
+									view_cnt as view_cnt,
+									rec_cnt as rec_cnt,
+									warn_cnt as warn_cnt,
+									reg_date as reg_date
+								FROM board 
+								ORDER BY con_no DESC 
+								) A
+								)B
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<insert id="writegb" useGeneratedKeys="true" keyProperty="gb_no" parameterType="com.gocom.DTO.GuestbookDTO">
+		insert into guestbook(
+			ment,
+			name
+		) values (
+			#{ment},
+			#{name}
+		)
+		
+	</insert>
+	
+	<select id="countgb" resultType="int">
+		SELECT COUNT(*) FROM guestbook
+	</select>
+	
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectgb" resultType="com.gocom.DTO.GuestbookDTO">
+SELECT B.* FROM (
+	SELECT @ROWNUM:=@ROWNUM+1 AS RN , A.* 
+							FROM (
+								SELECT 
+									@ROWNUM:=0 AS RN2,
+									gb_no as gb_no,
+									ment as ment,
+									name as name,
+									reg_date as reg_date
+								FROM guestbook 
+								ORDER BY gb_no DESC 
+								) A
+								)B
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="checktoday" resultType="int">
+	SELECT COUNT(*)
+	FROM 
+		guestbook
+	WHERE 
+		name='김철수' 
+	AND
+		( DATE(reg_date) ) = ( SELECT DATE(CURRENT_TIMESTAMP()) ) 
+	
+	</select>
+	
+	<select id="hotlist" resultType="com.gocom.DTO.BoardDTO"> 
+	SELECT *
+	FROM 
+		board
+	ORDER BY 
+		rec_cnt DESC
+	LIMIT 
+		5
+	</select>
+	
+	<select id="recent" resultType="com.gocom.DTO.GuestbookDTO"> 
+	SELECT *
+	FROM 
+		guestbook
+	ORDER BY 
+		reg_date DESC
+	LIMIT 
+		5
+	</select>
+	
+	<insert id="react" parameterType="com.gocom.DTO.EmojiDTO">
+		insert into emoji(
+			con_no,
+			emo_name,
+			name,
+			x_pos,
+			y_pos
+		) values (
+			#{con_no},
+			#{emo_name},
+			#{name},
+			#{x_pos},
+			#{y_pos}
+		)
+		
+	</insert>
+		
+	<select id="emoView" resultType="com.gocom.DTO.EmojiDTO">
+		select
+			*
+		from emoji
+		where
+			con_no=#{con_no}
+	</select>
 </mapper>
